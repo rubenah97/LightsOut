@@ -1,0 +1,85 @@
+		
+		table {
+			margin-left:auto;
+			margin-right:auto;
+		}
+		button {
+			order: 1;
+			z-index: 1;
+
+		}
+
+		.top {
+			Padding: 0px;
+			width: 0px;
+			height: 70px;
+			margin-left:auto;
+			margin-right:auto;
+			text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+		}
+
+		.divx {
+			padding: 10px;
+			margin: 10px;
+			border: solid black 2px;
+			width: 75px;
+			height: 75px;
+			border-radius: 50%;
+			background-color: white
+		}
+
+		.divx:hover {
+			cursor: pointer;
+		}
+
+		.lightOn {
+			background-color: salmon;
+		}
+
+		#playAgain {
+			text-align: center;
+			position: relative;
+			left: 123px;
+			font-size: 25px;
+		}
+
+		div.førstPåLinje {
+			clear: left;
+		}
+		h3 {
+			color: lightgreen;
+			text-align: center;
+		}
+		h2 {
+			text-align: center;
+			margin-left:auto;
+			margin-right:auto;
+			width: 300px;
+			color: blue;
+			text-decoration: underline;
+		}
+		button:hover {
+			cursor: pointer;
+		} 
+		h2:hover {
+			cursor: pointer;
+		}
+		body {
+		    padding:0;
+		    margin:0;
+		    overflow:hidden;
+			height: 600px;
+		}
+		canvas {
+		    position: fixed;
+		    left: 0;
+		    top: 0;
+		    padding:0;
+		    margin:0;
+		    z-index: -1;
+		}
+		div.btnbg {
+			position:fixed;
+		    left:0;
+		    top:0;
+		}

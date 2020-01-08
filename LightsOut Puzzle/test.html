@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    table, th, td, tr {
+        border:solid black 1px;
+        border-collapse: collapse;
+    }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+  <div id="test">Loading...</div> <br>
+    <div>
+      <input type="text" id="inputField" onkeyup="if(event.keyCode === 13){ add(this), document.getElementById('inputField').value = ''}">
+    </div>
+    	<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+      apiKey: "AIzaSyDekzvcdO-MZXJcwL6-rWZb6pDPUx18_LU",
+      authDomain: "ruben-16341.firebaseapp.com",
+      databaseURL: "https://ruben-16341.firebaseio.com",
+      projectId: "ruben-16341",
+      storageBucket: "ruben-16341.appspot.com",
+      messagingSenderId: "108711408774",
+      appId: "1:108711408774:web:bca29f91c2beb902570d07",
+      measurementId: "G-78Y903VTMD"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.firestore();
+    
+    var db = firebase.firestore(); 
+    var lightsOutCollection = db.collection('lightsOut');
+    
+  lightsOutCollection.orderBy('amountOfMoves').onSnapshot(
+		function (collectionSnapshot) {
+            let html = '<table>';
+                html += '<tr> <th> Name </th> <th> Amount of moves </th> </tr>';
+            collectionSnapshot.forEach(
+                function (lightsOutSnapshot) {
+                    console.log(lightsOutSnapshot.data());
+                    let lightsOut = lightsOutSnapshot.data();
+                    html += '<tr>' + '<td>' + lightsOut.name + '</td>' + '<td>' +  lightsOut.amountOfMoves + '</td>' +'</tr>';
+                });
+                html += '</table>';
+                document.getElementById('test').innerHTML = html;
+    })
+
+  function add(name) {
+    let lightsOut = {
+      name: name.value,
+      amountOfMoves: 2,
+    }
+    lightsOutCollection.add(lightsOut);
+  }
+  </script>
+</body>
+</html>
