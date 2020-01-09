@@ -159,65 +159,45 @@
     
 	var db = firebase.firestore(); 
 	var lightsOutCollection = db.collection('ligtsOut');
-
+	var currentChosenLevel = null;
 	highscore();
 	async function highscore(){
 		const collection =  db.collection('lightsOut');
 		let levels = await collection.get();
-		let docSnapshot = levels.docs[0];
+		let docSnapshot = levels.docs[currentChosenLevel];
 		let doc = docSnapshot.data();
 		console.log(doc);
 		// doc.scores.push({name: 'Knut', score: 2});
-		let result = await collection.doc(docSnapshot.id).set(doc);
-		console.log(result);
+		// let result = await collection.doc(docSnapshot.id).set(doc);
+		// console.log(result);
 		let html = '<table class="highscore" >';
-                html += '<tr class="highscore"> <th class="highscore"> Name </th> <th> Amount of moves </th> </tr>';
-				collectionSnapshot.forEach(
-					function (lightsOutSnapshot) {
-					console.log('hei');
-					console.log(lightsOutSnapshot.data());
-                    let lightsOut = lightsOutSnapshot.data();
-					console.log(lightsOutSnapshot.data().scores[0].name)
-                    html += '<tr class="highscore">' + '<td class="highscore">' + lightsOut.scores.name + '</td>' + '<td class="highscore">' +  lightsOut.scores.amountOfMoves + '</td>' +'</tr>';
+				html += '<tr class="highscore"> <th class="highscore"> Name </th> <th> Amount of moves </th> </tr>';
+				for (let i = 0; i < doc.scores.length; i++ ) {
+					html += '<tr class="highscore">' + '<td class="highscore">' + doc.scores[i].name + '</td>' + '<td class="highscore">' +  doc.scores[i].amountOfMoves + '</td>' +'</tr>';
 				}
-			);
+		
             html += '</table>';
             document.getElementById('test').innerHTML = html;
 	}
-	
-
-	// lightsOutCollection.get().onSnapshot(
-	// 	function (collectionSnapshot) {
-	// 		console.log(collectionSnapshot);
-    //         let html = '<table class="highscore" >';
-    //             html += '<tr class="highscore"> <th class="highscore"> Name </th> <th> Amount of moves </th> </tr>';
-	// 			collectionSnapshot.forEach(
-	// 				function (lightsOutSnapshot) {
-	// 				console.log('hei');
-	// 				console.log(lightsOutSnapshot.data());
-    //                 let lightsOut = lightsOutSnapshot.data();
-	// 				console.log(lightsOutSnapshot.data().scores[0].name)
-    //                 html += '<tr class="highscore">' + '<td class="highscore">' + lightsOut.scores.name + '</td>' + '<td class="highscore">' +  lightsOut.scores.amountOfMoves + '</td>' +'</tr>';
-	// 			}
-	// 		);
-    //         html += '</table>';
-    //         document.getElementById('test').innerHTML = html;
-    // 	});
-	
 
   
-  function add(name) {
-    let lightsOut = {
-      Names: name.value,
-      AmountOfMoves: teller,
+  async function add(name) {
+	  console.log(currentChosenLevel)
+    let newMap = {
+      name: name.value,
+      amountOfMoves: teller,
 	}
 	document.getElementById('inputField').value = '';
-    lightsOutCollection.map(lightsOut);
+	let levels = await db.collection('lightsOut').get();
+	let docSnapshot = levels.docs[currentChosenLevel];
+	let doc = docSnapshot.data();
+	console.log(doc);
+	doc.add(newMap);
   }
   </script>
 </script>
 		
-	<script src="script.js"></script>
+	<!-- <script src="script.js"></script> -->
 	<script>
 
 				// hjelpe variabler
@@ -311,7 +291,9 @@
 			teller = 0;
 			isPlaying = true;
 			if (lvlOne) {
+				currentChosenLevel = 1;
 				Text = 3;
+				highscore();
 			
 			}
 			tableBox();
@@ -335,7 +317,11 @@
 			size = 4;
 			teller = 0;
 			isPlaying = true;
-			if (lvlTwo) {Text = 4}
+			if (lvlTwo) {
+				currentChosenLevel = 3;
+				Text = 4;
+				highscore();
+			}
 			tableBox();
 			show();			
 			document.getElementById(`light00`).classList.add('lightOn');
@@ -363,7 +349,11 @@
 			size = 5;
 			teller = 0;
 			isPlaying = true;
-			if (lvlThree) {Text = 11}
+			if (lvlThree) {
+				currentChosenLevel = 2;
+				Text = 11;
+				highscore();
+			}
 			tableBox();
 			show();
 			document.getElementById(`light00`).classList.add('lightOn');
@@ -398,7 +388,11 @@
 			size = 6;
 			teller = 0;		
 			isPlaying = true;
-			if (lvlFour) {Text = 18}
+			if (lvlFour) {
+				currentChosenLevel = 0;
+				Text = 18;
+				highscore();
+			}
 			tableBox();
 			show();
 			document.getElementById(`light00`).classList.add('lightOn');
